@@ -14,6 +14,8 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 原配置不在已知名单中的（国内外）域名会先通过当地 DNS 服务器解析一次。
 添加 no-resolve 后，不在已知名单中的（国内外）域名将直接✈️ 起飞
 
+由于ACL4SSR规则停更，所以替换了一部分blackmatrix7规则
+
 移除
 - 📢 谷歌FCM
 - Ⓜ️ 微软云盘
