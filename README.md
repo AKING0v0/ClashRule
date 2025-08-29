@@ -33,7 +33,7 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 - 🚀 节点选择 -> ✈️ 起飞选择
 - 🚀 手动切换 -> 👆🏻 手动切换
 - ♻️ 自动选择 -> ⚡ 最低延迟
-- 🍃 应用净化 -> 💩 广告拦截
+- 🍃 应用净化 -> 💩 应用净化
 
 新增
 - 🔬 学术平台
