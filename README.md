@@ -42,6 +42,4 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 url-test                                  
 - 间隔时间 300秒 -> 30秒
 - 容差 50/150毫秒 -> 40毫秒
-
-LocalAreaNetwork.list 使用 DIRECT
-
+- 
