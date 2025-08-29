@@ -17,6 +17,7 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 由于ACL4SSR规则停更，所以替换了一部分blackmatrix7规则
 
 移除
+- 🛑 广告拦截
 - 📢 谷歌FCM
 - Ⓜ️ 微软云盘
 - 🍎 苹果服务
@@ -32,9 +33,7 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 - 🚀 节点选择 -> ✈️ 起飞选择
 - 🚀 手动切换 -> 👆🏻 手动切换
 - ♻️ 自动选择 -> ⚡ 最低延迟
-
-合并
-- 🛑 广告拦截 + 🍃 应用净化 -> 💩 广告拦截
+- 🍃 应用净化 -> 💩 广告拦截
 
 新增
 - 🔬 学术平台
