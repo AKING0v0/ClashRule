@@ -37,6 +37,7 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 
 新增
 - 🔬 学术平台
+- 🌏 全球节点
 
 url-test                                  
 - 间隔时间 300秒 -> 30秒
