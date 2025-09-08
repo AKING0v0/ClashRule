@@ -30,13 +30,14 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 - 📺 巴哈姆特
 
 重命名
+- Ⓜ️ 微软服务 -> 🪟 微软服务
 - 🚀 节点选择 -> ✈️ 起飞选择
 - 🚀 手动切换 -> 👆🏻 手动切换
 - ♻️ 自动选择 -> ⚡ 最低延迟
 - 🍃 应用净化 -> 💩 应用净化
 
 新增
-- 🔬 学术平台
+- 🎓 学术平台
 - 🌏 全球节点
 
 url-test                                  
