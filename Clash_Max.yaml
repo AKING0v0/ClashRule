@@ -1,0 +1,349 @@
+# 深巷有喵的「Clash_Max」配置 (ACL4SSR 改版)
+# 原配置作者：https://github.com/Rabbit-Spec
+# 核心设置保留原版 Clash_Max，策略与规则完全复刻 ACL4SSR_Online_Full_Modify_No_DNS_Leak.ini
+# 适用版本：所有使用 Mihomo (Meta) 内核的程序
+
+port: 7890
+socks-port: 7891
+mixed-port: 7892
+redir-port: 7893
+tproxy-port: 7894
+
+unified-delay: true
+geodata-mode: false
+geodata-loader: standard
+geo-auto-update: true
+geo-update-interval: 24
+tcp-concurrent: true
+find-process-mode: strict
+global-client-fingerprint: chrome
+
+allow-lan: true
+mode: rule
+log-level: info
+ipv6: true
+udp: true
+
+external-controller: 0.0.0.0:9090
+
+geox-url:
+  mmdb: 'https://geodata.kelee.one/Country-Masaiki.mmdb'
+  asn: 'https://geodata.kelee.one/GeoLite2-ASN-P3TERX.mmdb'
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - Mijia Cloud
+
+tun:
+  enable: true
+  stack: system
+  dns-hijack:
+    - any:53
+  auto-route: true
+  auto-detect-interface: true
+
+listeners:
+- name: socks5-in-1
+  type: socks
+  port: 10808
+  listen: 0.0.0.0
+  udp: true
+  users: []
+  proxy: DIRECT
+
+dns:
+  enable: true
+  prefer-h3: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  enhanced-mode: fake-ip
+  fake-ip-range: 28.0.0.1/8
+  fake-ip-filter:
+    - "*"
+    - +.lan
+  default-nameserver:
+    - 223.5.5.5
+    - 223.6.6.6
+  nameserver:
+    - https://223.5.5.5/dns-query
+    - https://223.6.6.6/dns-query
+
+# 锚点 - 节点订阅的参数
+NodeParam: &NodeParam {type: http, interval: 86400, health-check: {enable: true, url: 'http://connectivitycheck.gstatic.com/generate_204', interval: 60}}
+
+proxy-providers: 
+  我的节点:
+    url: '请在此处填入你的机场订阅链接'
+    <<: *NodeParam
+    path: './proxy_provider/Providers.yaml'
+
+# 锚点 - 提取自 INI 的正则筛选
+# 排除关键字正则 (用于最低延迟和全球节点)
+FilterExclude: &FilterExclude '(?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG))'
+
+# 地区筛选正则
+FilterHK: &FilterHK '(🇭🇰|港|HK|hk|Hong Kong|HongKong|hongkong)'
+FilterJP: &FilterJP '(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)'
+FilterSG: &FilterSG '(🇸🇬|新加坡|坡|狮城|SG|Singapore)'
+FilterTW: &FilterTW '(🇹🇼|台|新北|彰化|TW|Taiwan)'
+FilterUS: &FilterUS '(🇺🇸a|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|USA|United States)'
+FilterKR: &FilterKR '(🇰🇷|KR|Korea|KOR|首尔|韩|韓)'
+
+# 自动测速组参数 (url-test)
+AutoTest: &AutoTest {type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 300, tolerance: 40}
+
+proxy-groups:
+  # 1. 核心选择组：✈️ 起飞选择
+  - name: ✈️ 起飞选择
+    type: select
+    proxies: [⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换, DIRECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Rocket.png
+
+  # 2. 漏网之鱼 (Final)
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies: [✈️ 起飞选择, ⚡ 最低延迟, DIRECT, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Final.png
+
+  # 3. 手动切换 (包含所有节点)
+  - name: 👆🏻 手动切换
+    type: select
+    use: [我的节点]
+    filter: '.*'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Finger.png
+
+  # 4. 最低延迟 (排除特定关键字)
+  - name: ⚡ 最低延迟
+    <<: *AutoTest
+    use: [我的节点]
+    # 逻辑：匹配任意字符，且不包含排除关键字
+    filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Speed.png
+
+  # 5. 特定APP分组
+  - name: 💬 Ai平台
+    type: select
+    proxies: [✈️ 起飞选择, ⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换, DIRECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/ChatGPT.png
+
+  - name: 📺 哔哩哔哩
+    type: select
+    proxies: [DIRECT, 🇭🇰 香港节点, 🇨🇳 台湾节点]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Bilibili.png
+
+  - name: 📹 油管视频
+    type: select
+    proxies: [✈️ 起飞选择, ⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换, DIRECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/YouTube.png
+
+  - name: 🎓 学术平台
+    type: select
+    proxies: [DIRECT, 👆🏻 手动切换, ⚡ 最低延迟]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Education.png
+
+  - name: 🪟 微软服务
+    type: select
+    proxies: [DIRECT, 👆🏻 手动切换, ⚡ 最低延迟]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Microsoft.png
+
+  - name: 🎯 全球直连
+    type: select
+    proxies: [DIRECT, 👆🏻 手动切换, ⚡ 最低延迟]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Direct.png
+
+  - name: 💩 应用净化
+    type: select
+    proxies: [REJECT, DIRECT]
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Ad.png
+
+  # 6. 地区分组 (正则匹配)
+  - name: 🇭🇰 香港节点
+    <<: *AutoTest
+    use: [我的节点]
+    filter: *FilterHK
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Hong_Kong.png
+
+  - name: 🇯🇵 日本节点
+    <<: *AutoTest
+    use: [我的节点]
+    filter: *FilterJP
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Japan.png
+
+  - name: 🇸🇬 狮城节点
+    <<: *AutoTest
+    use: [我的节点]
+    filter: *FilterSG
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Singapore.png
+
+  - name: 🇨🇳 台湾节点
+    <<: *AutoTest
+    use: [我的节点]
+    filter: *FilterTW
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Taiwan.png
+
+  - name: 🇺🇲 美国节点
+    <<: *AutoTest
+    use: [我的节点]
+    filter: *FilterUS
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/United_States.png
+
+  - name: 🇰🇷 韩国节点
+    <<: *AutoTest
+    use: [我的节点]
+    filter: *FilterKR
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Korea.png
+
+  # 7. 全球节点 (排除以上主要地区和垃圾节点)
+  - name: 🌏 全球节点
+    type: select
+    use: [我的节点]
+    # 逻辑：排除CN,HK,TW,SG,JP,US,KR，且排除垃圾关键字
+    filter: '^(?=.*.)(?!.*(🇨🇳|🇭🇰|🇹🇼|🇸🇬|🇯🇵|🇺🇸|🇰🇷))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
+    icon: https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Color/Global.png
+
+# 规则集定义 (提取自 INI 中的 URL)
+# 注意：由于源是 .list 格式，behavior 设为 classical
+RuleSetClassical: &RuleSetClassical {type: http, behavior: classical, interval: 86400, format: text}
+
+rule-providers:
+  Lan:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Lan/Lan.list
+    path: ./ruleset/Lan.list
+
+  Direct:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Direct/Direct.list
+    path: ./ruleset/Direct.list
+
+  BanProgramAD:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list
+    path: ./ruleset/BanProgramAD.list
+
+  GoogleCN:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/GoogleCN.list
+    path: ./ruleset/GoogleCN.list
+
+  SteamCN:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/SteamCN/SteamCN.list
+    path: ./ruleset/SteamCN.list
+
+  AiSuite:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/dler-io/Rules/refs/heads/main/Surge/Surge%203/Provider/AI%20Suite.list
+    path: ./ruleset/AiSuite.list
+
+  YouTube:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/YouTube/YouTube.list
+    path: ./ruleset/YouTube.list
+
+  BilibiliACL:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Ruleset/BilibiliHMT.list
+    path: ./ruleset/BilibiliACL.list
+  
+  BilibiliBM:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/BiliBili/BiliBili.list
+    path: ./ruleset/BilibiliBM.list
+
+  Microsoft:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Microsoft/Microsoft.list
+    path: ./ruleset/Microsoft.list
+
+  GitHub:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/GitHub/GitHub.list
+    path: ./ruleset/GitHub.list
+
+  Proxy:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Proxy/Proxy.list
+    path: ./ruleset/Proxy.list
+
+  Scholar:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Scholar/Scholar.list
+    path: ./ruleset/Scholar.list
+
+  ChinaDomain:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
+    path: ./ruleset/ChinaDomain.list
+
+  ChinaCompanyIp:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list
+    path: ./ruleset/ChinaCompanyIp.list
+
+  Download:
+    <<: *RuleSetClassical
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Download/Download.list
+    path: ./ruleset/Download.list
+
+# 规则部分：完全按照 INI 逻辑排序
+rules:
+  # 🎯 全球直连 - 局域网与直连列表
+  - RULE-SET,Lan,🎯 全球直连
+  - RULE-SET,Direct,🎯 全球直连
+  
+  # 💩 应用净化 - 广告屏蔽
+  - RULE-SET,BanProgramAD,💩 应用净化
+  
+  # 🎯 全球直连 - GoogleCN & SteamCN
+  - RULE-SET,GoogleCN,🎯 全球直连
+  - RULE-SET,SteamCN,🎯 全球直连
+  
+  # 💬 Ai平台
+  - RULE-SET,AiSuite,💬 Ai平台
+  
+  # 📹 油管视频
+  - RULE-SET,YouTube,📹 油管视频
+  
+  # 📺 哔哩哔哩 (合并了 INI 中的两条规则)
+  - RULE-SET,BilibiliACL,📺 哔哩哔哩
+  - RULE-SET,BilibiliBM,📺 哔哩哔哩
+  
+  # 🪟 微软服务
+  - RULE-SET,Microsoft,🪟 微软服务
+  
+  # ✈️ 起飞选择 - GitHub & Proxy
+  - RULE-SET,GitHub,✈️ 起飞选择
+  - RULE-SET,Proxy,✈️ 起飞选择
+  
+  # 🎓 学术平台
+  - RULE-SET,Scholar,🎓 学术平台
+  
+  # 🎯 全球直连 - 国内域名、公司IP、下载
+  - RULE-SET,ChinaDomain,🎯 全球直连
+  - RULE-SET,ChinaCompanyIp,🎯 全球直连
+  - RULE-SET,Download,🎯 全球直连
+  
+  # 🎯 全球直连 - GEOIP CN
+  - GEOIP,CN,🎯 全球直连
+  
+  # 🐟 漏网之鱼 - Final
+  - MATCH,🐟 漏网之鱼
