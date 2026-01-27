@@ -1,5 +1,6 @@
 # 深巷有喵的「Clash_Max」配置 (ACL4SSR 改版)
 # 原配置作者：https://github.com/Rabbit-Spec
+# 现配置作者：https://github.com/AKING0v0
 # 核心设置保留原版 Clash_Max，策略与规则完全复刻 ACL4SSR_Online_Full_Modify_No_DNS_Leak.ini
 # 适用版本：所有使用 Mihomo (Meta) 内核的程序
 
