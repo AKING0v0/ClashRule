@@ -1,7 +1,7 @@
 # 深巷有喵的「Clash_Max」配置 (ACL4SSR 改版)
 # 原配置作者：https://github.com/Rabbit-Spec
 # 现配置作者：https://github.com/AKING0v0
-# 核心设置保留原版 Clash_Max，策略与规则完全复刻 ACL4SSR_Online_Full_Modify_No_DNS_Leak.ini
+# 核心设置保留原版 Clash_Max，策略与规则复刻 ACL4SSR_Online_Full_Modify_No_DNS_Leak.ini
 # 适用版本：所有使用 Mihomo (Meta) 内核的程序
 
 port: 7890
@@ -92,7 +92,7 @@ NodeParam: &NodeParam {type: http, interval: 86400, health-check: {enable: true,
 
 # 【新增】锚点 - 全局机场名单 (在这里管理所有机场的名字)
 # 以后有新机场，只需要在这里加上名字，并在下方 proxy-providers 添加对应配置即可
-AllProviderList: &AllProviderList [LinkCube,机场订阅2]
+AllProviderList: &AllProviderList [机场订阅1,机场订阅2]
 
 proxy-providers: 
   机场订阅1:
@@ -146,7 +146,7 @@ proxy-groups:
   # 5. 特定APP分组
   - name: 💬 Ai平台
     type: select
-    proxies: [✈️ 起飞选择, ⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换, DIRECT]
+    proxies: [🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换]
 
   - name: 📺 哔哩哔哩
     type: select
