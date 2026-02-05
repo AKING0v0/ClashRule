@@ -117,7 +117,7 @@ FilterUS: &FilterUS '(🇺🇸a|美|波特兰|达拉斯|俄勒冈|凤凰城|费�
 FilterKR: &FilterKR '(🇰🇷|KR|Korea|KOR|首尔|韩|韓)'
 
 # 自动测速组参数 (url-test)
-AutoTest: &AutoTest {type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 60, tolerance: 30}
+AutoTest: &AutoTest {type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 60, tolerance: 40}
 
 proxy-groups:
   # 1. 核心选择组：✈️ 起飞选择
