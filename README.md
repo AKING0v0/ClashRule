@@ -1,6 +1,6 @@
 
 ## ACL4SSR_Online_Full_Modify.ini
-
+自定义 YAML配置文件 https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/Clash_Max.yaml  
 自定义 订阅转换 配置转换 规则转换 的远程配置：
 
 https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/ACL4SSR_Online_Full_Modify_No_DNS_Leak.ini
@@ -28,18 +28,18 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 - 🌏 国内媒体
 - 🌍 国外媒体
 - 📺 巴哈姆特
+- 🍃 应用净化
 
 重命名
 - Ⓜ️ 微软服务 -> 🪟 微软服务
 - 🚀 节点选择 -> ✈️ 起飞选择
 - 🚀 手动切换 -> 👆🏻 手动切换
 - ♻️ 自动选择 -> ⚡ 最低延迟
-- 🍃 应用净化 -> 💩 应用净化
 
 新增
 - 🎓 学术平台
 - 🌏 全球节点
 
 url-test                                  
-- 间隔时间 300秒 -> 30秒
+- 间隔时间 300秒 -> 60秒
 - 容差 50/150毫秒 -> 40毫秒
