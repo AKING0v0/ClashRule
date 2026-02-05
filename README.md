@@ -1,6 +1,6 @@
 
 ## ACL4SSR_Online_Full_Modify.ini
-自定义 YAML配置文件 https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/Clash_Max.yaml  
+自定义 YAML配置文件 https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/Clash_Max.yaml
 自定义 订阅转换 配置转换 规则转换 的远程配置：
 
 https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/ACL4SSR_Online_Full_Modify_No_DNS_Leak.ini
