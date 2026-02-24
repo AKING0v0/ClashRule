@@ -216,10 +216,10 @@ rule-providers:
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Lan/Lan.list
     path: ./ruleset/Lan.list
 
-  Direct:
+  Download:
     <<: *RuleSetClassical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Direct/Direct.list
-    path: ./ruleset/Direct.list
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Download/Download.list
+    path: ./ruleset/Download.list
 
   GoogleCN:
     <<: *RuleSetClassical
@@ -271,26 +271,21 @@ rule-providers:
     url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Scholar/Scholar.list
     path: ./ruleset/Scholar.list
 
-  ChinaDomain:
+  Direct:
     <<: *RuleSetClassical
-    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list
-    path: ./ruleset/ChinaDomain.list
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Direct/Direct.list
+    path: ./ruleset/Direct.list
 
-  ChinaCompanyIp:
+  China:
     <<: *RuleSetClassical
-    url: https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list
-    path: ./ruleset/ChinaCompanyIp.list
-
-  Download:
-    <<: *RuleSetClassical
-    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Download/Download.list
-    path: ./ruleset/Download.list
+    url: https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/China/China.list
+    path: ./ruleset/China.list
 
 # 规则部分：完全按照 INI 逻辑排序
 rules:
   # 🎯 全球直连 - 局域网与直连列表
   - RULE-SET,Lan,🎯 全球直连
-  - RULE-SET,Direct,🎯 全球直连
+  - RULE-SET,Download,🎯 全球直连
   
   # 🎯 全球直连 - GoogleCN & SteamCN
   - RULE-SET,GoogleCN,🎯 全球直连
@@ -317,9 +312,8 @@ rules:
   - RULE-SET,Scholar,🎓 学术平台
   
   # 🎯 全球直连 - 国内域名、公司IP、下载
-  - RULE-SET,ChinaDomain,🎯 全球直连
-  - RULE-SET,ChinaCompanyIp,🎯 全球直连
-  - RULE-SET,Download,🎯 全球直连
+  - RULE-SET,Direct,🎯 全球直连
+  - RULE-SET,China,🎯 全球直连
   
   # 🎯 全球直连 - GEOIP CN
   - GEOIP,CN,🎯 全球直连
