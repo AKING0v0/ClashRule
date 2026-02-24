@@ -4,7 +4,7 @@
 
 自定义 订阅转换 配置转换 规则转换 的远程配置：
 
-https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/ACL4SSR_Online_Full_Modify
+https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/ACL4SSR_Online_Full_Modify.ini
 
 修改自
 https://git.moezx.cc/mashiro/ACL4SSR/raw/branch/master/Clash/config/ACL4SSR_Online_Full.ini
