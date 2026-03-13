@@ -11,7 +11,7 @@ redir-port: 7893
 tproxy-port: 7894
 
 unified-delay: true
-geodata-mode: false
+geodata-mode: true
 geodata-loader: standard
 geo-auto-update: true
 geo-update-interval: 24
@@ -55,7 +55,7 @@ sniffer:
 
 tun:
   enable: true
-  stack: system
+  stack: mixed
   dns-hijack:
     - any:53
   auto-route: true
