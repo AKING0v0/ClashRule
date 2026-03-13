@@ -51,7 +51,16 @@ sniffer:
   force-domain:
     - +.v2ex.com
   skip-domain:
-    - Mijia Cloud
+    - '+.mi.com'                  
+    - '+.apple.com'               # 如果 Windows 上装了 iCloud 或 Apple Music 必加
+    - '+.push.apple.com'
+    # --- 针对 Windows 及游戏优化 ---
+    - 'msftconnecttest.com'       # 微软网络探测
+    - 'msftncsi.com'
+    - '+.msftconnecttest.com'
+    - '+.msftncsi.com'
+    - '+.stun.*.*'                # 放行所有 STUN 流量，大幅改善游戏语音和 UDP 联机
+    - '+.stun.*.*.*'
 
 tun:
   enable: true
