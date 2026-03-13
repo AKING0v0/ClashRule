@@ -72,7 +72,7 @@ listeners:
 
 dns:
   enable: true
-  prefer-h3: true
+  prefer-h3: false
   listen: 0.0.0.0:1053
   ipv6: false
   enhanced-mode: fake-ip
@@ -81,9 +81,10 @@ dns:
     - '+.lan'
     - '+.local'
     - 'localhost.ptlogin2.qq.com'
-    - '+.srv.nintendo.net'
     - '+.stun.*.*'
     - '+.stun.*.*.*'
+    - 'msftconnecttest.com'
+    - 'msftncsi.com'
   
   default-nameserver:
     - 223.5.5.5
