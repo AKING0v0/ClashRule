@@ -10,7 +10,7 @@ https://raw.githubusercontent.com/AKING0v0/ClashRule/refs/heads/main/ACL4SSR_Onl
 https://git.moezx.cc/mashiro/ACL4SSR/raw/branch/master/Clash/config/ACL4SSR_Online_Full.ini
 https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Mannix_No_DNS_Leak.ini
 
-无 DNS 泄漏：
+可添加无 DNS 泄漏：
 和原配置只有一行差异
 原配置不在已知名单中的（国内外）域名会先通过当地 DNS 服务器解析一次。
 添加 no-resolve 后，不在已知名单中的（国内外）域名将直接✈️ 起飞
@@ -42,5 +42,5 @@ https://raw.githubusercontent.com/zsokami/ACL4SSR/main/ACL4SSR_Online_Full_Manni
 - 🌏 全球节点
 
 url-test                                  
-- 间隔时间 300秒 -> 60秒
-- 容差 50/150毫秒 -> 40毫秒
+- 间隔时间 300秒 -> 120秒
+- 容差 50/150毫秒 -> 60毫秒
