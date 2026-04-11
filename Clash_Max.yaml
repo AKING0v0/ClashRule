@@ -134,40 +134,36 @@ FilterHK: &FilterHK '(🇭🇰|港|HK|hk|Hong Kong|HongKong|hongkong)'
 FilterJP: &FilterJP '(🇯🇵|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan)'
 FilterSG: &FilterSG '(🇸🇬|新加坡|坡|狮城|SG|Singapore)'
 FilterTW: &FilterTW '(🇹🇼|台|新北|彰化|TW|Taiwan)'
-FilterUS: &FilterUS '(🇺🇸a|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|USA|United States)'
+FilterUS: &FilterUS '(🇺🇸|美|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|USA|United States)'
 FilterKR: &FilterKR '(🇰🇷|KR|Korea|KOR|首尔|韩|韓)'
 
 # 自动测速组参数 (url-test)
 AutoTest: &AutoTest {type: url-test, url: 'http://www.gstatic.com/generate_204', interval: 120, tolerance: 60}
 
-proxy-groups:
-  # 1. 核心选择组：✈️ 起飞选择
+Proxy-groups:
   - name: ✈️ 起飞选择
     type: select
-    proxies: [⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换, DIRECT]
+    proxies: [⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 👆🏻 手动切换]
 
-  # 2. 漏网之鱼 (Final)
   - name: 🐟 漏网之鱼
     type: select
-    proxies: [✈️ 起飞选择, ⚡ 最低延迟, DIRECT, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换]
+    proxies: [✈️ 起飞选择, DIRECT, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇺🇲 美国节点, 👆🏻 手动切换]
 
-  # 3. 手动切换 (包含所有节点)
   - name: 👆🏻 手动切换
     type: select
+    proxies: [🌏 全球节点]
     use: *AllProviderList
     filter: '.*'
 
-  # 4. 最低延迟 (排除特定关键字)
   - name: ⚡ 最低延迟
     <<: *AutoTest
     use: *AllProviderList
     # 逻辑：匹配任意字符，且不包含排除关键字
     filter: '^(?=.*(.))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
 
-  # 5. 特定APP分组
   - name: 💬 Ai平台
     type: select
-    proxies: [🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换]
+    proxies: [🇯🇵 日本节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 👆🏻 手动切换]
 
   - name: 📺 哔哩哔哩
     type: select
@@ -175,21 +171,26 @@ proxy-groups:
 
   - name: 📹 油管视频
     type: select
-    proxies: [✈️ 起飞选择, ⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇸🇬 狮城节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 🇰🇷 韩国节点, 👆🏻 手动切换]
+    proxies: [⚡ 最低延迟, 🇭🇰 香港节点, 🇯🇵 日本节点, 🇨🇳 台湾节点, 🇺🇲 美国节点, 👆🏻 手动切换]
 
   - name: 🎓 学术平台
     type: select
-    proxies: [DIRECT, 👆🏻 手动切换, ⚡ 最低延迟]
+    proxies: [DIRECT, 👆🏻 手动切换]
 
   - name: 🪟 微软服务
     type: select
-    proxies: [DIRECT, 👆🏻 手动切换, ⚡ 最低延迟]
+    proxies: [DIRECT, 👆🏻 手动切换]
 
   - name: 🎯 全球直连
     type: select
-    proxies: [DIRECT, 👆🏻 手动切换, ⚡ 最低延迟]
- 
-  # 6. 地区分组 (正则匹配)
+    proxies: [DIRECT, 👆🏻 手动切换]
+
+  - name: 🌏 全球节点
+    type: select
+    use: *AllProviderList
+    # 逻辑：排除CN,HK,TW,SG,JP,US,KR，且排除垃圾关键字
+    filter: '^(?=.*.)(?!.*(🇨🇳|🇭🇰|🇹🇼|🇸🇬|🇯🇵|🇺🇸|🇰🇷))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
+
   - name: 🇭🇰 香港节点
     <<: *AutoTest
     use: *AllProviderList
@@ -199,33 +200,26 @@ proxy-groups:
     <<: *AutoTest
     use: *AllProviderList
     filter: *FilterJP
+
+  - name: 🇨🇳 台湾节点
+    <<: *AutoTest
+    use: *AllProviderList
+    filter: *FilterTW
+
+  - name: 🇰🇷 韩国节点
+    <<: *AutoTest
+    use: *AllProviderList
+    filter: *FilterKR
   
   - name: 🇸🇬 狮城节点
     <<: *AutoTest
     use: *AllProviderList
     filter: *FilterSG
   
-  - name: 🇨🇳 台湾节点
-    <<: *AutoTest
-    use: *AllProviderList
-    filter: *FilterTW
-  
   - name: 🇺🇲 美国节点
     <<: *AutoTest
     use: *AllProviderList
     filter: *FilterUS
-  
-  - name: 🇰🇷 韩国节点
-    <<: *AutoTest
-    use: *AllProviderList
-    filter: *FilterKR
-  
-  # 7. 全球节点 (排除以上主要地区和垃圾节点)
-  - name: 🌏 全球节点
-    type: select
-    use: *AllProviderList
-    # 逻辑：排除CN,HK,TW,SG,JP,US,KR，且排除垃圾关键字
-    filter: '^(?=.*.)(?!.*(🇨🇳|🇭🇰|🇹🇼|🇸🇬|🇯🇵|🇺🇸|🇰🇷))(?!.*((?i)群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|使用|提示|特别|访问|支持|教程|关注|更新|作者|加入|超时|收藏|(\b(USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|Traffic)(\d+)?\b|(\d{4}-\d{2}-\d{2}|\dG)))).*$'
  
 # 规则集定义 (提取自 INI 中的 URL)
 # 注意：由于源是 .list 格式，behavior 设为 classical
