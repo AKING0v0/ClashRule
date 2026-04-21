@@ -1,19 +1,21 @@
 #!name=PingMe
-#!desc=获取Cookie，自动化签到与视频奖励
+#!desc=获取Cookie，支持多账号签到与视频奖励
 #!openUrl = 
 #!tag=
 #!icon=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png
-#!date=
+#!date=2026-04-21
 
 [Mitm]
 hostname = api.pingmeapp.net
 
 [Script]
-cron {cron} script-path=PingMe.js, img-url=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png, timeout=60, enable={sw},tag=PingMe
+# 定时任务：执行自动签到和看视频
+cron {cron} script-path=PingMe.js, img-url=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png, timeout=60, enable={sw}, tag=PingMe
 
-http-request ^https:\/\/api\.pingmeapp\.net\/app\/queryBalanceAndBonus script-path=PingMe.js, requires-body=true, timeout=60, img-url=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png, enable={sw2},tag=PingMe Cookie
+# 抓包配置：进入 App 个人中心刷新余额时触发
+http-request ^https:\/\/api\.pingmeapp\.net\/app\/queryBalanceAndBonus script-path=PingMe.js, requires-body=true, timeout=60, img-url=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png, enable={sw2}, tag=PingMe获取Cookie
 
 [Argument]
-sw=switch,true,tag=PingMe Cron,desc=开启日常签到与视频任务
-sw2=switch,false,tag=PingMe Cookie,desc=开启获取Cookie抓包
-cron = input, "30 8,20 * * *", tag=Cron时间, desc=执行时间设置
+sw=switch,true,tag=PingMe Cron,desc=是否开启每天的定时自动任务
+sw2=switch,false,tag=PingMe获取Cookie,desc=如需抓取新账号或更新Cookie，请开启此开关
+cron = input, "30 8,20 * * *", tag=定时时间, desc=自定义执行时间(Cron表达式)
