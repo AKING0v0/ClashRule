@@ -13,7 +13,7 @@ hostname = api.pingmeapp.net
 cron {cron} script-path=PingMe.js, img-url=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png, timeout=60, enable={sw}, tag=PingMe
 
 # 抓包配置：进入 App 个人中心刷新余额时触发
-http-request ^https:\/\/api\.pingmeapp\.net\/app\/queryBalanceAndBonus script-path=PingMe.js, requires-body=true, timeout=60, img-url=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png, enable={sw2}, tag=PingMe获取Cookie
+http-request ^https:\/\/api\.pingmeapp\.net\/app\/ script-path=PingMe.js, requires-body=true, timeout=60, img-url=https://raw.githubusercontent.com/fishdown/Icon/master/app/PingMe.png, enable={sw2}, tag=PingMe获取Cookie
 
 [Argument]
 sw=switch,true,tag=PingMe Cron,desc=是否开启每天的定时自动任务
